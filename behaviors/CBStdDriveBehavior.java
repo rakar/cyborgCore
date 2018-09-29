@@ -20,20 +20,34 @@ public class CBStdDriveBehavior extends CBBehavior {
 		gyroLockState = new CBEdgeTrigger();
 	}
 
+	/*
+	public CBStdDriveBehavior setData(CBStdDriveRequestData requestData, CBStdDriveControlData controlData) {
+		drd = requestData;
+		dcd = controlData;
+		return this;
+	}
+
+	public CBStdDriveBehavior setRequestData(CBStdDriveRequestData data) {
+		drd = data;
+		return this;
+	}
+
+	public CBStdDriveBehavior setControlData(CBStdDriveControlData data) {
+		dcd = data;
+		return this;
+	}
+	*/
+
 	public CBStdDriveBehavior setGyroLockTracker(CBErrorCorrection pid) {
 		this.gyroLockTracker = pid;
 		return this;
 	}
 
 	@Override
-	public void init() {
-
-	}
-
-	@Override
 	public void update() {
-		dcd.active = drd.active;
+		super.update();
 
+		dcd.active = drd.active;
 		if(dcd.active) {
 			dcd.direction.copy(drd.direction);
 			dcd.rotation = drd.rotation;

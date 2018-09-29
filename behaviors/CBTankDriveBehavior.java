@@ -15,15 +15,35 @@ public class CBTankDriveBehavior extends CBBehavior {
 		super(robot);
         drd = requestData;
         dcd = controlData;
+		//setRequestData((CBTankDriveRequestData)Cyborg.requestData.driveData);
+		//setControlData((CBDifferentialDriveControlData)Cyborg.controlData.driveData);
 	}
 
-	@Override
-	public void init() {
-
+	/*
+	public CBTankDriveBehavior setData(CBTankDriveRequestData requestData, CBDifferentialDriveControlData controlData) {
+		drd = requestData;
+		dcd = controlData;
+		return this;
 	}
+
+	public CBTankDriveBehavior setRequestData(CBTankDriveRequestData data) {
+		drd = data;
+		return this;
+	}
+
+	public CBTankDriveBehavior setControlData(CBDifferentialDriveControlData data) {
+		dcd = data;
+		return this;
+	}
+	*/
 
 	@Override
 	public void update() {
+		super.update();
+		
+		//CBTankDriveRequestData drd = (CBTankDriveRequestData)Cyborg.requestData.driveData;
+		//CBDifferentialDriveControlData dcd = (CBDifferentialDriveControlData)Cyborg.controlData.driveData;
+		
 		// Copy simple Tank drive command info
 		dcd.leftPower = drd.leftPower;
 		dcd.rightPower = drd.rightPower;

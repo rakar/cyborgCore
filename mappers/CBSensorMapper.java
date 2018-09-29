@@ -9,7 +9,9 @@ public abstract class CBSensorMapper extends CBModule {
 		super(robot);
 	}
 
-	public abstract void init();
+	public void init() {
+	}
 
-	public abstract void update();
+	public void update() {
+	}
 }

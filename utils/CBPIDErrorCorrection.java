@@ -13,12 +13,11 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	private double holdValue;
 	private double correction;
 	private CBOnTargetMode onTargetMode = CBOnTargetMode.Zero;
-	private CBSource pidSource;
 
 	/**
-	 * x@param P the Proportional Constant
-	 * x@param I the Integral Constant
-	 * x@param D the Derivative Constant
+	 * //@param P the Proportional Constant
+	 * //@param I the Integral Constant
+	 * //@param D the Derivative Constant
 	 */
 	public CBPIDErrorCorrection()
 	{
@@ -32,7 +31,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setInputLimits(double, double)
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#setInputLimits(double, double)
 	 */
 	@Override
 	public CBErrorCorrection setInputLimits(double minIn,double maxIn)
@@ -43,7 +42,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setOutputLimits(double, double)
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#setOutputLimits(double, double)
 	 */
 	@Override
 	public CBErrorCorrection setOutputLimits(double minOut, double maxOut)
@@ -54,7 +53,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setConstants(double[])
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#setConstants(double[])
 	 */
 	@Override
 	public CBErrorCorrection setConstants(double[] k){
@@ -63,7 +62,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setTarget()
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#setTarget()
 	 */
 	//public CBPIDController copy()
 	//{
@@ -81,7 +80,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setTarget(double)
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#setTarget(double)
 	 */
 	@Override
 	public CBErrorCorrection setTarget(double t)
@@ -90,7 +89,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setTarget(double, boolean)
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#setTarget(double, boolean)
 	 */
 	@Override
 	public CBErrorCorrection setTarget(double t, boolean reset)
@@ -104,7 +103,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#reset()
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#reset()
 	 */
 	@Override
 	public CBErrorCorrection reset() {
@@ -160,14 +159,9 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 
 		return correction;
 	}
-
-	public double update() {
-		if(pidSource==null) return update(0.0);
-		return update(pidSource.get());
-	}
-
+	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#update(double)
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#update(double)
 	 */
 	@Override
 	public double update(double source)
@@ -203,7 +197,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#getIn()
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#getIn()
 	 */
 	@Override
 	public double getIn()
@@ -212,7 +206,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#getError()
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#getError()
 	 */
 	@Override
 	public double getError(){
@@ -220,7 +214,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#getOut()
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#getOut()
 	 */
 	@Override
 	public double getOut()
@@ -228,7 +222,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 		return out;
 	}
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#getOut()
+	 * @see org.montclairrobotics.cyborg.utils.CBErrorCorrection#getOut()
 	 */
 	@Override
 	public double getCorrection()

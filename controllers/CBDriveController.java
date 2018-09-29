@@ -1,6 +1,6 @@
 package org.montclairrobotics.cyborg.core.controllers;
 
-//import java.time.Duration;
+import java.time.Duration;
 import java.util.ArrayList;
 
 import org.montclairrobotics.cyborg.Cyborg;
@@ -17,7 +17,7 @@ public abstract class CBDriveController extends CBRobotController {
 	public class CBDriveFeedback {
 		public CB2DVector translation;
 		public double rotation;
-		//public Duration timespan;
+		public Duration timespan; 
 	}
 	
 	public interface CBDrivetrainFeedbackProvider {
@@ -48,6 +48,7 @@ public abstract class CBDriveController extends CBRobotController {
 		} else {
 			if (driveModule.getDriveMode()!=driveMode) {
 				driveMode = CBDriveMode.Conflict;
+				//SmartDashboard.putString("Drivemode","Conflict");
 				throw new RuntimeException("Drivemode Conflict");
 			}
 		}

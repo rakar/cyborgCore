@@ -29,11 +29,6 @@ public class CBSwerveDriveController extends CBDriveController {
     */
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void update() {
         if (dcd.active) {
             for (CBDriveModule dm : driveModules) {

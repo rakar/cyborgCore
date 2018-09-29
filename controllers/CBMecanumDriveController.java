@@ -1,11 +1,11 @@
 package org.montclairrobotics.cyborg.core.controllers;
 
+import java.util.ArrayList;
+
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.core.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
-
-import java.util.ArrayList;
 
 public class CBMecanumDriveController extends CBDriveController {
 	//protected double tErr;
@@ -38,14 +38,21 @@ public class CBMecanumDriveController extends CBDriveController {
 
 	public CBMecanumDriveController(Cyborg robot, CBStdDriveControlData controlData) {
 		super(robot);
+        //setControlData(Cyborg.controlData.driveData);
 		dcd = controlData;
 		System.err.println("Warning: CBMecanumDriveController implementation is highly experimental.");
 	}
 
-	@Override
-	public void init() {
-
+	/*
+	public CBMecanumDriveController setControlData(CBDriveControlData data) {
+		if (data instanceof CBStdDriveControlData) {
+			dcd = (CBStdDriveControlData) data;
+		} else {
+			throw new RuntimeException("Error: Invalid DriveControlData type for CBMecanumDriveController");
+		}
+		return  this;
 	}
+	*/
 
 	@Override
 	public void update() {

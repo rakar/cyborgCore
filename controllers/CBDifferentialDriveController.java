@@ -1,6 +1,8 @@
 package org.montclairrobotics.cyborg.core.controllers;
 
-//import java.time.Instant;
+import java.time.Instant;
+import java.util.ArrayList;
+
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.core.data.CBDifferentialDriveControlData;
@@ -8,15 +10,13 @@ import org.montclairrobotics.cyborg.core.data.CBDriveControlData;
 import org.montclairrobotics.cyborg.core.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
 
-import java.util.ArrayList;
-
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CBDifferentialDriveController extends CBDriveController implements CBDriveController.CBDrivetrainFeedbackProvider {
 
 	protected ArrayList<CBDriveModule> leftDriveModules = new ArrayList<>();
 	protected ArrayList<CBDriveModule> rightDriveModules = new ArrayList<>();
-	//Instant lastUpdateTime;
+	Instant lastUpdateTime;
 	CBDriveFeedback feedback;
 	boolean canProvideFeedback=false;
 	CBDriveControlData dcd;
@@ -24,14 +24,17 @@ public class CBDifferentialDriveController extends CBDriveController implements 
 	public CBDifferentialDriveController(Cyborg robot, CBDriveControlData controlData) {
 		super(robot);
 		driveModules = null;
+		//dcd = Cyborg.controlData.driveData;
 		dcd = controlData;
 	}
 
-	@Override
-	public void init() {
-
+	/*
+	public CBDifferentialDriveController setControlData(CBDriveControlData data) {
+		dcd = data;
+		return this;
 	}
-
+	*/
+	
 	@Override
 	public void update() {
 		if(dcd.active) {
@@ -106,7 +109,7 @@ public class CBDifferentialDriveController extends CBDriveController implements 
 					 .translate(direction); 
 			CB2DVector diff = targetPosition.sub(pos);
 			res = module.getOrientationVector().dot(diff);
-			//SmartDashboard.putNumber("speed:", res);
+			SmartDashboard.putNumber("speed:", res);
 		}
 			break;
 		case Conflict:
