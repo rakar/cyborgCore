@@ -14,6 +14,7 @@ public class CBDriveModule {
 	private CB2DVector orientationVector;
 	private CBDriveMode driveMode=null;
 	private CBSpeedControllerArrayController feedbackArray = null;
+	// test comment
 	
 	public CBDriveModule() {
 	}
