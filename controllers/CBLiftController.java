@@ -121,12 +121,12 @@ public class CBLiftController extends CBRobotController {
                     else if (goDown
                             // there is no bottom margin, so just do it normally
                             && (!cd.bottomMargin.isActive()
-                            // or (there is one
-                            // and the encoder is clean
-                            // and we are above the margin)
-                            || (cd.bottomMargin.isActive()
-                            && encoder.wasIndexed()
-                            && cd.bottomMargin.isAboveTarget()))) {
+                                // or (there is one
+                                // and the encoder is clean
+                                // and we are above the margin)
+                                || (cd.bottomMargin.isActive()
+                                    && encoder.wasIndexed()
+                                    && cd.bottomMargin.isAboveTarget()))) {
                         nextState = CBLiftControlStates.DownNorm;
                     }
                     break;
@@ -135,12 +135,12 @@ public class CBLiftController extends CBRobotController {
                     else if (goUp
                             // there is no top margin, so just do it normally
                             && (!cd.topMargin.isActive()
-                            // or (there is one
-                            // and the encoder is clean
-                            // and we are below the margin
-                            || (cd.topMargin.isActive()
-                            && encoder.wasIndexed()
-                            && cd.topMargin.isBelowTarget()))) {
+                                // or (there is one
+                                // and the encoder is clean
+                                // and we are below the margin
+                                || (cd.topMargin.isActive()
+                                    && encoder.wasIndexed()
+                                    && cd.topMargin.isBelowTarget()))) {
                         nextState = CBLiftControlStates.UpNorm;
                     }
                     break;
@@ -151,8 +151,8 @@ public class CBLiftController extends CBRobotController {
                             // and the encoder is clean
                             // and we are below the margin
                             && (cd.bottomMargin.isActive()
-                            && encoder.wasIndexed()
-                            && cd.bottomMargin.isBelowTarget())) {
+                                && encoder.wasIndexed()
+                                && cd.bottomMargin.isBelowTarget())) {
                         nextState = CBLiftControlStates.DownSlow;
                     }
                     break;
@@ -163,8 +163,8 @@ public class CBLiftController extends CBRobotController {
                             // and the encoder is clean
                             // and we are above the margin
                             && (cd.topMargin.isActive()
-                            && encoder.wasIndexed()
-                            && cd.topMargin.isAboveTarget())) {
+                                && encoder.wasIndexed()
+                                && cd.topMargin.isAboveTarget())) {
                         nextState = CBLiftControlStates.DownSlow;
                     }
                     break;
@@ -273,53 +273,20 @@ public class CBLiftController extends CBRobotController {
         sm = new CBLiftStateMachine();
     }
 
-    /*
-    public CBLiftController setData(CBLiftControlData data) {
-        cd = data;
-        return this;
-    }
-
-    public CBLiftController setSpeedControllerArray(CBSpeedControllerArrayController array) {
-        speedControllerArray = array;
-        return this;
-    }
-    */
-
     public CBLiftController setTopLimit(CBDeviceID limitID) {
         this.topLimitSwitch = hardwareAdapter.getDigitalInput(limitID);
         return this;
     }
-
-    /*
-    public CBLiftController setTopLimit(CBDigitalInput limit) {
-        this.topLimitSwitch = limit;
-        return this;
-    }
-    */
 
     public CBLiftController setBottomLimit(CBDeviceID limitID) {
         this.bottomLimitSwitch = hardwareAdapter.getDigitalInput(limitID);
         return this;
     }
 
-    /*
-    public CBLiftController setBottomLimit(CBDigitalInput limit) {
-        this.bottomLimitSwitch = limit;
-        return this;
-    }
-    */
-
     public CBLiftController setEncoder(CBDeviceID deviceID) {
         this.encoder = hardwareAdapter.getEncoder(deviceID);
         return this;
     }
-
-    /*
-    public CBLiftController setEncoder(CBEncoder device) {
-        this.encoder = device;
-        return this;
-    }
-    */
 
     public CBLiftController setErrorCorrection(CBErrorCorrection errorCorrection) {
         this.errorCorrection = errorCorrection;

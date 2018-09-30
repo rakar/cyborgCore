@@ -1,11 +1,11 @@
 package org.montclairrobotics.cyborg.core.controllers;
 
+import java.util.ArrayList;
+
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.core.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
-
-import java.util.ArrayList;
 
 public class CBMecanumDriveController extends CBDriveController {
 	//protected double tErr;

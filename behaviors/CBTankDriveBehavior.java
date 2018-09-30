@@ -24,6 +24,7 @@ public class CBTankDriveBehavior extends CBBehavior {
 
 	@Override
 	public void update() {
+		super.update();
 		// Copy simple Tank drive command info
 		dcd.leftPower = drd.leftPower;
 		dcd.rightPower = drd.rightPower;

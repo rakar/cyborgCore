@@ -10,9 +10,15 @@ public abstract class CBRobotController extends CBModule {
 
 	public CBRobotController(Cyborg robot) {
 		super(robot);
+		// TODO Auto-generated constructor stub
 	}
 
-	public abstract void update();
+	public void init() {
+	}
+
+	public void update() {
+	}
+	
 	public void configHardware() {
 		
 	}

@@ -1,19 +1,19 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
+import java.util.ArrayList;
+
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
 import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
 
-import java.util.ArrayList;
-
 public class CBDriveModule {
 
-	protected ArrayList<org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArrayController> controllerArrays = new ArrayList<>();
+	protected ArrayList<CBSpeedControllerArrayController> controllerArrays = new ArrayList<>();
 	private CB2DVector position = new CB2DVector();
 	private double orientation;
 	private double orientationRadians;
 	private CB2DVector orientationVector;
 	private CBDriveMode driveMode=null;
-	private org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArrayController feedbackArray = null;
+	private CBSpeedControllerArrayController feedbackArray = null;
 	
 	public CBDriveModule() {
 	}
@@ -30,7 +30,7 @@ public class CBDriveModule {
 		return this;
 	}
 	
-	public CBDriveModule addSpeedControllerArray(org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArrayController controllerArray) {
+	public CBDriveModule addSpeedControllerArray(CBSpeedControllerArrayController controllerArray) {
 		if (driveMode==null) {
 			driveMode = controllerArray.getDriveMode();
 		} else {
@@ -49,12 +49,12 @@ public class CBDriveModule {
 	/**
 	 * @return the controllerArrays
 	 */
-	public ArrayList<org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArrayController> getControllerArrays() {
+	public ArrayList<CBSpeedControllerArrayController> getControllerArrays() {
 		return controllerArrays;
 	}
 	
 	public CBDriveModule update(double target) {
-		for(org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArrayController c:controllerArrays) {
+		for(CBSpeedControllerArrayController c:controllerArrays) {
 			c.update(target);
 		}
 		return this;

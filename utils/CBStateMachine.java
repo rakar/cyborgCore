@@ -31,7 +31,7 @@ public abstract class CBStateMachine<T> {
 	 * If this state is set to Looping doTransition() and doCurrentState() will be called for each transition, 
 	 * but those transitions will be invisible outside of what this class and any overridden methods do. 
 	 */
-	protected enum CBStateMachineLoopMode {OneShot, Looping};
+	protected enum CBStateMachineLoopMode {OneShot, Looping}
 	
 	protected CBStateMachine(T start) {
 		setState(start);
