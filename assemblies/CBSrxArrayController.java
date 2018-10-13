@@ -6,7 +6,7 @@ package org.montclairrobotics.cyborg.core.assemblies;
 public class CBSrxArrayController extends CBSpeedControllerArrayController {
 
 	public CBSrxArrayController() {
-		throw new RuntimeException("CBSrxArrayController not implemented yet. Possibly use CBVictorArrayController.");
+		throw new RuntimeException("CBSrxArrayController not implemented yet. Possibly use CBSimpleArrayController.");
 	}
 
 	@Override

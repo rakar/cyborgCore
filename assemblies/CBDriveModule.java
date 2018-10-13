@@ -1,9 +1,9 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
-import java.util.ArrayList;
-
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
 import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
+
+import java.util.ArrayList;
 
 public class CBDriveModule {
 
@@ -31,6 +31,8 @@ public class CBDriveModule {
 	}
 	
 	public CBDriveModule addSpeedControllerArray(CBSpeedControllerArrayController controllerArray) {
+		//Cyborg.hardwareAdapter.robot.logMessage("drive module adding speed controller array");
+
 		if (driveMode==null) {
 			driveMode = controllerArray.getDriveMode();
 		} else {
@@ -54,7 +56,9 @@ public class CBDriveModule {
 	}
 	
 	public CBDriveModule update(double target) {
+		//Cyborg.hardwareAdapter.robot.logMessage("in drive module update");
 		for(CBSpeedControllerArrayController c:controllerArrays) {
+			//Cyborg.hardwareAdapter.robot.logMessage("Calling speed controller array update");
 			c.update(target);
 		}
 		return this;

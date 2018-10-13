@@ -11,7 +11,7 @@ import org.montclairrobotics.cyborg.devices.*;
 public class CBArcadeDriveMapper extends CBTeleOpMapper {
 	private CBAxis fwdAxis, strAxis, rotAxis;
 	private CBButton gyroLock; 
-	private double  xScale, yScale, rScale;
+	private double strScale, fwdScale, rotScale;
 	private CBStdDriveRequestData drd;
 	private boolean debug;
 
@@ -33,9 +33,9 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
 		}
 
 		// Set default scale
-		xScale = 1;
-		yScale = 1; 
-		rScale = 1;
+		fwdScale = -1;
+		strScale = +1;
+		rotScale = -1;
 		
 		return this;
 	}
@@ -50,10 +50,10 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
 		return this;
 	}
 
-	public CBArcadeDriveMapper setAxisScales(double xScale, double yScale, double rScale) {
-		this.xScale = xScale;
-		this.yScale = yScale;
-		this.rScale = rScale;
+	public CBArcadeDriveMapper setAxisScales(double fwdScale, double strScale, double rotScale) {
+		this.strScale = strScale;
+		this.fwdScale = fwdScale;
+		this.rotScale = rotScale;
 		return this;
 	}
 
@@ -66,8 +66,8 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
 	public void update() {
         CBStdDriveRequestData drd = (CBStdDriveRequestData) this.drd;
         drd.active = true;
-        drd.direction.setXY(xScale * strAxis.get(), yScale * fwdAxis.get());
-        drd.rotation = rScale * rotAxis.get();
+        drd.direction.setXY(strScale * strAxis.get(), fwdScale * fwdAxis.get());
+        drd.rotation = rotScale * rotAxis.get();
         drd.gyroLockActive = gyroLock.getState();
 
         if(debug) {
