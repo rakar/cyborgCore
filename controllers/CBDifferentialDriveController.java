@@ -1,6 +1,5 @@
 package org.montclairrobotics.cyborg.core.controllers;
 
-//import java.time.Instant;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.core.data.CBDifferentialDriveControlData;
@@ -10,7 +9,6 @@ import org.montclairrobotics.cyborg.core.utils.CB2DVector;
 
 import java.util.ArrayList;
 
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CBDifferentialDriveController extends CBDriveController implements CBDriveController.CBDrivetrainFeedbackProvider {
 
@@ -23,7 +21,7 @@ public class CBDifferentialDriveController extends CBDriveController implements 
 	
 	public CBDifferentialDriveController(Cyborg robot, CBDriveControlData controlData) {
 		super(robot);
-		driveModules = null;
+		//driveModules = null;
 		dcd = controlData;
 	}
 
@@ -48,14 +46,10 @@ public class CBDifferentialDriveController extends CBDriveController implements 
 			} else if(dcd instanceof CBStdDriveControlData) {
 				
 				CBStdDriveControlData dcd = (CBStdDriveControlData) this.dcd;
-				for(CBDriveModule dm:leftDriveModules) {
+				for(CBDriveModule dm:driveModules) {
 					double power = calculate(dm, dcd.direction, dcd.rotation);
 					dm.update(power);
-				}				
-				for(CBDriveModule dm:rightDriveModules) {
-					double power = calculate(dm, dcd.direction, dcd.rotation);
-					dm.update(power);
-				}	
+				}
 			} else {
 				String msg = "Error: Invalid DriveControlData for DifferentialDriveController";
 				System.out.println(msg);
@@ -94,8 +88,9 @@ public class CBDifferentialDriveController extends CBDriveController implements 
 		switch (driveMode) {
 		case Power:
 		{
-			CB2DVector diff = new CB2DVector(0,direction.getY()+Math.signum(module.getPosition().getX())*rotation);
-			res = module.getOrientationVector().dot(diff);
+			//CB2DVector diff = new CB2DVector(0,direction.getY()+Math.signum(module.getPosition().getX())*rotation);
+			//res = module.getOrientationVector().dot(diff);
+			res = (direction.getY()+Math.signum(module.getPosition().getX())*rotation)*module.getOrientationCos();
 		}
 			break;
 		case Speed:

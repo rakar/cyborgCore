@@ -1,7 +1,7 @@
 package org.montclairrobotics.cyborg.core.controllers;
 
 import org.montclairrobotics.cyborg.Cyborg;
-import org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArrayController;
+import org.montclairrobotics.cyborg.core.assemblies.CBSpeedControllerArray;
 import org.montclairrobotics.cyborg.core.data.CBLiftControlData;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
 import org.montclairrobotics.cyborg.devices.CBDigitalInput;
@@ -72,7 +72,7 @@ public class CBLiftController extends CBRobotController {
     CBDigitalInput topLimitSwitch;
     CBDigitalInput bottomLimitSwitch;
     CBEncoder encoder;
-    CBSpeedControllerArrayController speedControllerArray;
+    CBSpeedControllerArray speedControllerArray;
 
     @Override
     public void init() {
@@ -266,7 +266,7 @@ public class CBLiftController extends CBRobotController {
     }
 
     // Added extra parameters to constructor. These are absolutely required, so in the constructor they should be.
-    public CBLiftController(Cyborg robot, CBLiftControlData controlData, CBSpeedControllerArrayController array) {
+    public CBLiftController(Cyborg robot, CBLiftControlData controlData, CBSpeedControllerArray array) {
         super(robot);
         cd = controlData;
         speedControllerArray = array;

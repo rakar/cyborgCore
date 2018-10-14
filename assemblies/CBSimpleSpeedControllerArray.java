@@ -9,17 +9,17 @@ import org.montclairrobotics.cyborg.devices.CBSpeedController;
  * to be the lead controller and all others will be considered followers.  
  * @author rich
  */
-public class CBSimpleArrayController extends CBSpeedControllerArrayController {
+public class CBSimpleSpeedControllerArray extends CBSpeedControllerArray {
 	double currentPower;
 
-	public CBSimpleArrayController() {
+	public CBSimpleSpeedControllerArray() {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArrayController#update(double)
+	 * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArray#update(double)
 	 */
 	@Override
-	public CBSpeedControllerArrayController update(double target) {
+	public CBSpeedControllerArray update(double target) {
 		double outputValue = 0;
 		//Cyborg.hardwareAdapter.robot.logMessage("in speed controller array update " + driveMode.name());
 

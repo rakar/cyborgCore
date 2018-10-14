@@ -112,7 +112,7 @@ public class CBMecanumDriveController extends CBDriveController {
                 double speedScale = maxSpeed<((double)1)?1:1.0/maxSpeed;
                 for(CBCalcModule cm : calcModules) {
 					//Cyborg.hardwareAdapter.robot.logMessage("Calling Drive module update");
-                    cm.driveModule.update(cm.vTotal*speedScale);
+                    cm.driveModule.update(cm.vTotal*speedScale*Math.cos(cm.driveModule.getOrientationRadians()));
                 }
             }
             break;

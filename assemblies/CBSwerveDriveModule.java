@@ -35,8 +35,8 @@ public class CBSwerveDriveModule extends CBDriveModule {
 	 * @return this module
 	 */
 	public CBDriveModule update(double targetAngle, double targetSpeed) {
-		CBSpeedControllerArrayController angleController = controllerArrays.get(0);
-		CBSpeedControllerArrayController driveController = controllerArrays.get(1);
+		CBSpeedControllerArray angleController = controllerArrays.get(0);
+		CBSpeedControllerArray driveController = controllerArrays.get(1);
 		double flip = 1.0;
 
 		double currentAngle = angleController.get();

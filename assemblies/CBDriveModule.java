@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 public class CBDriveModule {
 
-	protected ArrayList<CBSpeedControllerArrayController> controllerArrays = new ArrayList<>();
+	protected ArrayList<CBSpeedControllerArray> controllerArrays = new ArrayList<>();
 	private CB2DVector position = new CB2DVector();
 	private double orientation;
 	private double orientationRadians;
+	private double orientationCos;
 	private CB2DVector orientationVector;
 	private CBDriveMode driveMode=null;
-	private CBSpeedControllerArrayController feedbackArray = null;
+	private CBSpeedControllerArray feedbackArray = null;
 
 	public CBDriveModule() {
 	}
@@ -26,11 +27,12 @@ public class CBDriveModule {
 		this.position = position;
 		this.orientation = orientation;
 		this.orientationRadians = Math.PI*orientation/180.0;
+		this.orientationCos = Math.cos(orientationRadians);
 		this.orientationVector = new CB2DVector(-Math.sin(orientationRadians),Math.cos(orientationRadians));
 		return this;
 	}
 	
-	public CBDriveModule addSpeedControllerArray(CBSpeedControllerArrayController controllerArray) {
+	public CBDriveModule addSpeedControllerArray(CBSpeedControllerArray controllerArray) {
 		//Cyborg.hardwareAdapter.robot.logMessage("drive module adding speed controller array");
 
 		if (driveMode==null) {
@@ -51,13 +53,13 @@ public class CBDriveModule {
 	/**
 	 * @return the controllerArrays
 	 */
-	public ArrayList<CBSpeedControllerArrayController> getControllerArrays() {
+	public ArrayList<CBSpeedControllerArray> getControllerArrays() {
 		return controllerArrays;
 	}
 	
 	public CBDriveModule update(double target) {
 		//Cyborg.hardwareAdapter.robot.logMessage("in drive module update");
-		for(CBSpeedControllerArrayController c:controllerArrays) {
+		for(CBSpeedControllerArray c:controllerArrays) {
 			//Cyborg.hardwareAdapter.robot.logMessage("Calling speed controller array update");
 			c.update(target);
 		}
@@ -79,13 +81,20 @@ public class CBDriveModule {
 	}
 
 	/**
-	 * @return the orientation in radians
+	 * @return the cosine of the orientation
 	 */
-	public double getOrientationRadians() {
-		return orientationRadians;
+	public double getOrientationCos() {
+		return orientationCos;
 	}
 
-	/**
+    /**
+     * @return the orientation in radians
+     */
+    public double getOrientationRadians() {
+        return orientationRadians;
+    }
+
+    /**
 	 * @return the orientation vector
 	 */
 	public CB2DVector getOrientationVector() {

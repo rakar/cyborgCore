@@ -1,14 +1,13 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
-import java.util.ArrayList;
-
-import org.montclairrobotics.cyborg.Cyborg;
+import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
+import org.montclairrobotics.cyborg.core.utils.CBEnums.CBEncoderScheme;
+import org.montclairrobotics.cyborg.core.utils.CBErrorCorrection;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
 import org.montclairrobotics.cyborg.devices.CBEncoder;
 import org.montclairrobotics.cyborg.devices.CBSpeedController;
-import org.montclairrobotics.cyborg.core.utils.CBErrorCorrection;
-import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
-import org.montclairrobotics.cyborg.core.utils.CBEnums.CBEncoderScheme;
+
+import java.util.ArrayList;
 
 import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
 
@@ -20,7 +19,7 @@ import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
  * @author rich
  */
 
-public abstract class CBSpeedControllerArrayController {
+public abstract class CBSpeedControllerArray {
 	protected ArrayList<CBSpeedController> speedControllers = new ArrayList<>();
 	
 	protected CBEncoder encoder = null;
@@ -32,47 +31,47 @@ public abstract class CBSpeedControllerArrayController {
 	protected boolean reversed=false;
 	protected int direction=1;
 
-	public CBSpeedControllerArrayController setErrorCorrection(CBErrorCorrection errorCorrection){
+	public CBSpeedControllerArray setErrorCorrection(CBErrorCorrection errorCorrection){
 		this.errorCorrection = errorCorrection;
 		return this;
 	}
 
-	public CBSpeedControllerArrayController setDriveMode(CBDriveMode driveMode) {
+	public CBSpeedControllerArray setDriveMode(CBDriveMode driveMode) {
 		this.driveMode = driveMode;
 		return this;
 	}
 	
-	public CBSpeedControllerArrayController setReversed(boolean reversed) {
+	public CBSpeedControllerArray setReversed(boolean reversed) {
 		this.reversed = reversed;
 		this.direction = reversed?-1:1;
 		return this;
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArrayController#addSpeedController(org.montclairrobotics.cyborg.devices.CBSpeedController)
+	 * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArray#addSpeedController(org.montclairrobotics.cyborg.devices.CBSpeedController)
 	 */
-	public CBSpeedControllerArrayController addSpeedController(CBDeviceID controllerId) {
+	public CBSpeedControllerArray addSpeedController(CBDeviceID controllerId) {
 		speedControllers.add(hardwareAdapter.getSpeedController(controllerId));
 		return this;
 	}
 
 
-	public abstract CBSpeedControllerArrayController update(double target);
+	public abstract CBSpeedControllerArray update(double target);
 
 	/* (non-Javadoc)
-	 * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArrayController#getReversed()
+	 * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArray#getReversed()
 	 */
 	public boolean getReversed() {
 		return reversed;
 	}
 	
 
-	public CBSpeedControllerArrayController setEncoder(CBDeviceID encoderId) {
+	public CBSpeedControllerArray setEncoder(CBDeviceID encoderId) {
 		this.encoder = hardwareAdapter.getEncoder(encoderId);
 		return this;
 	}
 	
-	public CBSpeedControllerArrayController setEncoderScheme(CBEncoderScheme encoderScheme) {
+	public CBSpeedControllerArray setEncoderScheme(CBEncoderScheme encoderScheme) {
 		this.encoderScheme = encoderScheme;
 		return this;
 	}
