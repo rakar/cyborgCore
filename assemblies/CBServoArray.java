@@ -14,8 +14,8 @@ public class CBServoArray {
         return this;
     }
 
-    public CBServoArray update(double target){
-        for(CBServo s:servos) {
+    public CBServoArray update(double target) {
+        for (CBServo s : servos) {
             //Cyborg.hardwareAdapter.robot.logMessage("in update servo loop");
             s.setPosition(target);
         }

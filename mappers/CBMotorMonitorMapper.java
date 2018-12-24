@@ -33,17 +33,17 @@ public class CBMotorMonitorMapper extends CBSensorMapper {
     public void update() {
         String[] status = new String[controllers.size()];
         int i = 0;
-        for(CBSpeedController controller: controllers) {
+        for (CBSpeedController controller : controllers) {
             CBSpeedControllerFault fault = controller.getSpeedControllerFault();
             double current = controller.getActualCurrent();
             String name = controller.getName();
             String value;
-            if (fault==null) {
+            if (fault == null) {
                 value = Double.toString(current);
             } else {
                 value = fault.errMsg;
             }
-            status[i] = name +" "+value;
+            status[i] = name + " " + value;
         }
         robot.putStringArray("MotorMonitor", status);
     }

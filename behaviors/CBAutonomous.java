@@ -5,6 +5,8 @@ import org.montclairrobotics.cyborg.core.utils.CBModule;
 
 /**
  * Base class for all Autonomous behaviors
+ *
+ * @author rich
  */
 public abstract class CBAutonomous extends CBModule {
 
@@ -12,7 +14,9 @@ public abstract class CBAutonomous extends CBModule {
         super(robot);
     }
 
-    public void init() {}
+    public void init() {
+    }
 
-    public void update() {}
+    public void update() {
+    }
 }

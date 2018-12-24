@@ -8,56 +8,57 @@ import org.montclairrobotics.cyborg.core.utils.CB2DVector;
 import java.util.ArrayList;
 
 public class CBMecanumDriveController extends CBDriveController {
-	//protected double tErr;
-	//protected double minMA = Double.MAX_VALUE;
-	//protected double maxAbsV;
-	private double qtrPi = Math.PI/4.0;
-	private double halfPi = Math.PI/2.0;
+    //protected double tErr;
+    //protected double minMA = Double.MAX_VALUE;
+    //protected double maxAbsV;
+    private double qtrPi = Math.PI / 4.0;
+    private double halfPi = Math.PI / 2.0;
 
-	private CBStdDriveControlData dcd;
-	private ArrayList<CBCalcModule> calcModules = new ArrayList<>();
+    private CBStdDriveControlData dcd;
+    private ArrayList<CBCalcModule> calcModules = new ArrayList<>();
 
-	public enum CBMecanumDriveCalcMode {ASYMMETRIC, SYMMETRIC}
+    public enum CBMecanumDriveCalcMode {ASYMMETRIC, SYMMETRIC}
 
-	private CBMecanumDriveCalcMode calcMode = CBMecanumDriveCalcMode.SYMMETRIC;
+    private CBMecanumDriveCalcMode calcMode = CBMecanumDriveCalcMode.SYMMETRIC;
 
-	protected class CBCalcModule {
-	    int fbm;
-	    int lrm;
-	    double momentArm;
-	    double vTrans;
-	    double vCorr;
-	    double vTheta;
-	    double vTotal;
-	    CBDriveModule driveModule;
-	    public CBCalcModule(CBDriveModule driveModule) {
-	        this.driveModule = driveModule;
+    protected class CBCalcModule {
+        int fbm;
+        int lrm;
+        double momentArm;
+        double vTrans;
+        double vCorr;
+        double vTheta;
+        double vTotal;
+        CBDriveModule driveModule;
+
+        public CBCalcModule(CBDriveModule driveModule) {
+            this.driveModule = driveModule;
         }
     }
-	
 
-	public CBMecanumDriveController(Cyborg robot, CBStdDriveControlData controlData) {
-		super(robot);
-		dcd = controlData;
-		//Cyborg.hardwareAdapter.robot.logMessage("Warning: CBMecanumDriveController implementation is highly experimental.");
-	}
 
-	@Override
-	public void init() {
+    public CBMecanumDriveController(Cyborg robot, CBStdDriveControlData controlData) {
+        super(robot);
+        dcd = controlData;
+        //Cyborg.hardwareAdapter.robot.logMessage("Warning: CBMecanumDriveController implementation is highly experimental.");
+    }
 
-	}
+    @Override
+    public void init() {
 
-	@Override
-	public void update() {
-		//Cyborg.hardwareAdapter.robot.logMessage("CBMecanumDriveController: update - " + Boolean.toString(dcd.active));
-		if(dcd.active) {
-			calculate();
-		}
-	}
+    }
 
-	private void calculate() {
+    @Override
+    public void update() {
+        //Cyborg.hardwareAdapter.robot.logMessage("CBMecanumDriveController: update - " + Boolean.toString(dcd.active));
+        if (dcd.active) {
+            calculate();
+        }
+    }
 
-		switch (calcMode) {
+    private void calculate() {
+
+        switch (calcMode) {
             case ASYMMETRIC: {
                 // This needs a rethink.
                 // The original code assumed the modules were added
@@ -104,42 +105,42 @@ public class CBMecanumDriveController extends CBDriveController {
                 double maxSpeed = 0;
                 for (CBCalcModule cm : calcModules) {
                     double speed = cm.fbm * cm.lrm * dcd.direction.getX() + dcd.direction.getY() - cm.lrm * dcd.rotation;
-                    if(Math.abs(speed)>maxSpeed) {
+                    if (Math.abs(speed) > maxSpeed) {
                         maxSpeed = speed;
                     }
                     cm.vTotal = speed;
                 }
-                double speedScale = maxSpeed<((double)1)?1:1.0/maxSpeed;
-                for(CBCalcModule cm : calcModules) {
-					//Cyborg.hardwareAdapter.robot.logMessage("Calling Drive module update");
-                    cm.driveModule.update(cm.vTotal*speedScale*Math.cos(cm.driveModule.getOrientationRadians()));
+                double speedScale = maxSpeed < ((double) 1) ? 1 : 1.0 / maxSpeed;
+                for (CBCalcModule cm : calcModules) {
+                    //Cyborg.hardwareAdapter.robot.logMessage("Calling Drive module update");
+                    cm.driveModule.update(cm.vTotal * speedScale * Math.cos(cm.driveModule.getOrientationRadians()));
                 }
             }
             break;
         }
-	}
-	
-	public CBMecanumDriveController addDriveModule(CBDriveModule driveModule) {
+    }
 
-		//Cyborg.hardwareAdapter.robot.logMessage("CBMecanumDriveController addDriveModuel");
+    public CBMecanumDriveController addDriveModule(CBDriveModule driveModule) {
 
-		CBCalcModule calcModule = new CBCalcModule(driveModule);
-	    calcModule.fbm = driveModule.getPosition().getY() > 0 ? 1 : -1;
-	    calcModule.lrm = driveModule.getPosition().getX() < 0 ? 1 : -1;
-	    calcModule.vCorr = 0;
-	    calcModule.vTheta = 0;
-	    calcModule.vTrans = 0;
-	    calcModule.vTotal = 0;
+        //Cyborg.hardwareAdapter.robot.logMessage("CBMecanumDriveController addDriveModuel");
+
+        CBCalcModule calcModule = new CBCalcModule(driveModule);
+        calcModule.fbm = driveModule.getPosition().getY() > 0 ? 1 : -1;
+        calcModule.lrm = driveModule.getPosition().getX() < 0 ? 1 : -1;
+        calcModule.vCorr = 0;
+        calcModule.vTheta = 0;
+        calcModule.vTrans = 0;
+        calcModule.vTotal = 0;
         CB2DVector pos = driveModule.getPosition();
-	    calcModule.momentArm = pos.getMag() * Math.cos(Math.atan2(Math.abs(pos.getX()), Math.abs(pos.getY())) - qtrPi);
+        calcModule.momentArm = pos.getMag() * Math.cos(Math.atan2(Math.abs(pos.getX()), Math.abs(pos.getY())) - qtrPi);
 
-		//if(calcModule.momentArm<minMA) minMA=calcModule.momentArm;
-		calcModules.add(calcModule);
-		return this;
-	}
+        //if(calcModule.momentArm<minMA) minMA=calcModule.momentArm;
+        calcModules.add(calcModule);
+        return this;
+    }
 
-	@Override
-	public CBMecanumDriveController setControlPeriod(double controlPeriod) {
-		return (CBMecanumDriveController)super.setControlPeriod(controlPeriod);
-	}
+    @Override
+    public CBMecanumDriveController setControlPeriod(double controlPeriod) {
+        return (CBMecanumDriveController) super.setControlPeriod(controlPeriod);
+    }
 }
