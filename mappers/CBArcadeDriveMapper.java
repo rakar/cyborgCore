@@ -1,11 +1,8 @@
 package org.montclairrobotics.cyborg.core.mappers;
 
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.data.CBStdDriveRequestData;
 import org.montclairrobotics.cyborg.devices.*;
-//import org.montclairrobotics.cyborg.devices.CBButtonRef;
 
 
 public class CBArcadeDriveMapper extends CBTeleOpMapper {
@@ -13,12 +10,11 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
     private CBButton gyroLock;
     private double strScale, fwdScale, rotScale;
     private CBStdDriveRequestData drd;
-    private boolean debug;
 
     public CBArcadeDriveMapper(Cyborg robot, CBStdDriveRequestData requestData) {
         super(robot);
         drd = requestData;
-        debug = false;
+        //debug = false;
     }
 
     public CBArcadeDriveMapper setAxes(CBDeviceID fwdDeviceID, CBDeviceID strDeviceID, CBDeviceID rotDeviceID) {
@@ -41,7 +37,7 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
     }
 
     public CBArcadeDriveMapper setDebug(boolean debug) {
-        this.debug = debug;
+        super.setDebug(debug);
         return this;
     }
 
@@ -71,6 +67,7 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
         drd.gyroLockActive = gyroLock.getState();
 
         if (debug) {
+            robot.logMessage("joystick0:");
             robot.logMessage("Raw Axes (f,s,r): " + Double.toString(fwdAxis.get()) + ":" + Double.toString(strAxis.get()) + ":" + Double.toString(rotAxis.get()));
             robot.logMessage("drd data (dy,dx,r): " + Double.toString(drd.direction.getY()) + ":" + Double.toString(drd.direction.getX()) + ":" + Double.toString(drd.rotation));
         }

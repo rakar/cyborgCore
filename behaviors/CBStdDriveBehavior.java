@@ -31,6 +31,12 @@ public class CBStdDriveBehavior extends CBBehavior {
     }
 
     @Override
+    public CBStdDriveBehavior setDebug(boolean debug) {
+        super.setDebug(debug);
+        return this;
+    }
+
+    @Override
     public void update() {
         super.update();
 
@@ -51,6 +57,11 @@ public class CBStdDriveBehavior extends CBBehavior {
             // Autonomous may only issue drive requests periodically.
             //
             drd.active = false;
+
+            if(debug) {
+                robot.logMessage("CBStdDriveBehavior: dcd active: "+Boolean.toString(dcd.active));
+                robot.logMessage("CBStdDriveBehavior: dcd data (dy,dx,r): " + Double.toString(dcd.direction.getY()) + ":" + Double.toString(dcd.direction.getX()) + ":" + Double.toString(dcd.rotation));
+            }
         }
     }
 }

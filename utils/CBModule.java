@@ -6,6 +6,7 @@ public abstract class CBModule {
 	public Cyborg robot;
 	protected boolean isActive;
 	protected boolean initialized;
+	protected boolean debug;
 
 	public boolean IsActive() {
 		return isActive;
@@ -17,6 +18,7 @@ public abstract class CBModule {
 
 	public CBModule(Cyborg robot) {
 		this.robot = robot;
+		this.debug = false;
 	}
 
 	public void moduleInit() {
@@ -27,4 +29,9 @@ public abstract class CBModule {
     }
 
 	public abstract void init();
+
+	public CBModule setDebug(boolean debug) {
+		this.debug = debug;
+		return this;
+	}
 }

@@ -1,5 +1,6 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
+import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.utils.CBErrorCorrection.CBOnTargetMode;
 import org.montclairrobotics.cyborg.devices.CBSpeedController;
 
