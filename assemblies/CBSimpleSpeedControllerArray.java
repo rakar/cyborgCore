@@ -36,11 +36,10 @@ public class CBSimpleSpeedControllerArray extends CBSpeedControllerArray {
                     //outputValue = 0;
                 } else {
                     double encoderRate = encoder.getRate();
-                    // rich - this looks backwards.
                     if (errorCorrection.getOnTargetMode() == CBOnTargetMode.HoldValue) {
-                        currentPower = errorCorrection.setTarget(target).update(encoderRate);
-                    } else {
                         currentPower += errorCorrection.setTarget(target).update(encoderRate);
+                    } else {
+                        currentPower = errorCorrection.setTarget(target).update(encoderRate);
                     }
                     outputValue = currentPower;
                 }
@@ -62,7 +61,6 @@ public class CBSimpleSpeedControllerArray extends CBSpeedControllerArray {
         for (CBSpeedController sc : speedControllers) {
             double v = outputValue * direction;
             sc.set(v);
-            //Cyborg.hardwareAdapter.robot.logMessage("set speed: "+Double.toString(v));
         }
         return this;
     }
