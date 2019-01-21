@@ -26,7 +26,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	}
 	
 	@Override
-	public CBErrorCorrection setOnTargetMode(CBOnTargetMode mode) {
+	public CBPIDErrorCorrection setOnTargetMode(CBOnTargetMode mode) {
 		this.onTargetMode = mode;
 		return this;
 	}
@@ -35,7 +35,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setInputLimits(double, double)
 	 */
 	@Override
-	public CBErrorCorrection setInputLimits(double minIn,double maxIn)
+	public CBPIDErrorCorrection setInputLimits(double minIn,double maxIn)
 	{
 		this.minIn = minIn;
 		this.maxIn = maxIn;
@@ -46,7 +46,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setOutputLimits(double, double)
 	 */
 	@Override
-	public CBErrorCorrection setOutputLimits(double minOut, double maxOut)
+	public CBPIDErrorCorrection setOutputLimits(double minOut, double maxOut)
 	{
 		this.minOut=minOut;
 		this.maxOut=maxOut;
@@ -57,11 +57,16 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setConstants(double[])
 	 */
 	@Override
-	public CBErrorCorrection setConstants(double[] k){
+	public CBPIDErrorCorrection setConstants(double[] k){
 		this.k = k;
 		return this;
 	}
-	
+
+	public CBPIDErrorCorrection setConstants(double pK, double iK, double dK){
+		k = new double[] {pK, iK, dK};
+		return this;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setTarget()
 	 */
@@ -75,7 +80,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	
 	
 	@Override
-	public CBErrorCorrection setTarget()
+	public CBPIDErrorCorrection setTarget()
 	{
 		return setTarget(0.0,false);
 	}
@@ -84,7 +89,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setTarget(double)
 	 */
 	@Override
-	public CBErrorCorrection setTarget(double t)
+	public CBPIDErrorCorrection setTarget(double t)
 	{
 		return setTarget(t,false);
 	}
@@ -93,7 +98,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#setTarget(double, boolean)
 	 */
 	@Override
-	public CBErrorCorrection setTarget(double t, boolean reset)
+	public CBPIDErrorCorrection setTarget(double t, boolean reset)
 	{
 		target=t;
 		if(reset)
@@ -107,7 +112,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	 * @see org.montclairrobotics.cyborg.core.utils.CBErrorCorrection#reset()
 	 */
 	@Override
-	public CBErrorCorrection reset() {
+	public CBPIDErrorCorrection reset() {
 		error=0.0;
 		prevError=0.0;
 		totalError=0.0;
@@ -116,7 +121,7 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 		return this;
 	}
 		
-	public CBErrorCorrection resetIAccum() {
+	public CBPIDErrorCorrection resetIAccum() {
 		totalError=0.0;	
 		return this;
 	}
@@ -239,5 +244,10 @@ public class CBPIDErrorCorrection implements CBErrorCorrection {
 	@Override
 	public CBOnTargetMode getOnTargetMode() {
 		return onTargetMode;
+	}
+
+	public CBPIDErrorCorrection setSource(CBSource pidSource) {
+		this.pidSource = pidSource;
+		return this;
 	}
 }

@@ -10,8 +10,8 @@ public class CBStdDriveBehavior extends CBBehavior {
     CBEdgeTrigger gyroLockState;
     CBErrorCorrection gyroLockTracker = null;
 
-    CBStdDriveRequestData drd;
-    CBStdDriveControlData dcd;
+    protected CBStdDriveRequestData drd;
+    protected CBStdDriveControlData dcd;
 
     public CBStdDriveBehavior(Cyborg robot, CBStdDriveRequestData requestData, CBStdDriveControlData controlData) {
         super(robot);
@@ -59,11 +59,11 @@ public class CBStdDriveBehavior extends CBBehavior {
             // Autonomous may only issue drive requests periodically.
             //
             drd.active = false;
+        }
 
-            if(debug) {
-                robot.logMessage("CBStdDriveBehavior: dcd active: "+Boolean.toString(dcd.active));
-                robot.logMessage("CBStdDriveBehavior: dcd data (dy,dx,r): " + Double.toString(dcd.direction.getY()) + ":" + Double.toString(dcd.direction.getX()) + ":" + Double.toString(dcd.rotation));
-            }
+        if(debug) {
+            robot.logMessage("CBStdDriveBehavior: dcd active: "+Boolean.toString(dcd.active));
+            robot.logMessage("CBStdDriveBehavior: dcd data (dy,dx,r): " + Double.toString(dcd.direction.getY()) + ":" + Double.toString(dcd.direction.getX()) + ":" + Double.toString(dcd.rotation));
         }
     }
 }
