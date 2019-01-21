@@ -57,4 +57,7 @@ public class CBStdDriveRequestData extends CBDriveRequestData {
     // or simply never use it.
     // public boolean orbitMode;
 
+    public boolean shiftToHighGear;
+    public boolean shiftToLowGear;
+
 }

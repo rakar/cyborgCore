@@ -44,6 +44,8 @@ public class CBStdDriveBehavior extends CBBehavior {
         if (dcd.active) {
             dcd.direction.copy(drd.direction);
             dcd.rotation = drd.rotation;
+            dcd.shiftToHighGear = drd.shiftToHighGear;
+            dcd.shiftToLowGear = drd.shiftToLowGear;
 
             gyroLockState.update(drd.gyroLockActive);
             if (gyroLockTracker != null) {

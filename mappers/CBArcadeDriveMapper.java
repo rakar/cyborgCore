@@ -10,6 +10,7 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
     private CBButton gyroLock;
     private double strScale, fwdScale, rotScale;
     private CBStdDriveRequestData drd;
+    private CBButton shiftToHighGear, shiftToLowGear;
 
     public CBArcadeDriveMapper(Cyborg robot, CBStdDriveRequestData requestData) {
         super(robot);
@@ -33,6 +34,12 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
         strScale = +1;
         rotScale = -1;
 
+        return this;
+    }
+
+    public CBArcadeDriveMapper setShifterButtons(CBDeviceID shiftToHigh, CBDeviceID shiftToLow) {
+        this.shiftToHighGear = Cyborg.hardwareAdapter.getButton(shiftToHigh);
+        this.shiftToLowGear = Cyborg.hardwareAdapter.getButton(shiftToLow);
         return this;
     }
 
@@ -65,6 +72,11 @@ public class CBArcadeDriveMapper extends CBTeleOpMapper {
         drd.direction.setXY(strScale * strAxis.get(), fwdScale * fwdAxis.get());
         drd.rotation = rotScale * rotAxis.get();
         drd.gyroLockActive = gyroLock.getState();
+
+        if(shiftToHighGear!=null) {
+            drd.shiftToHighGear = shiftToHighGear.getRisingEdge();
+            drd.shiftToLowGear = shiftToLowGear.getRisingEdge();
+        }
 
         if (debug) {
             robot.logMessage("joystick0:");

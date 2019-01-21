@@ -6,28 +6,33 @@ import org.montclairrobotics.cyborg.core.data.CBDifferentialDriveControlData;
 import org.montclairrobotics.cyborg.core.data.CBDriveControlData;
 import org.montclairrobotics.cyborg.core.data.CBStdDriveControlData;
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
+import org.montclairrobotics.cyborg.devices.CBDeviceID;
+import org.montclairrobotics.cyborg.devices.CBSolenoid;
 
 import java.util.ArrayList;
 
 
 public class CBDifferentialDriveController extends CBDriveController implements CBDriveController.CBDrivetrainFeedbackProvider {
 
+    CBDriveControlData dcd;
     protected ArrayList<CBDriveModule> leftDriveModules = new ArrayList<>();
     protected ArrayList<CBDriveModule> rightDriveModules = new ArrayList<>();
-    //Instant lastUpdateTime;
+    protected ArrayList<CBSolenoid> highGearSolenoids = new ArrayList<>();
+    protected ArrayList<CBSolenoid> lowGearSolenoids = new ArrayList<>();
+    boolean defaultToHighGear = true;
     CBDriveFeedback feedback;
     boolean canProvideFeedback = false;
-    CBDriveControlData dcd;
 
     public CBDifferentialDriveController(Cyborg robot, CBDriveControlData controlData) {
         super(robot);
-        //driveModules = null;
         dcd = controlData;
     }
 
     @Override
     public void init() {
-
+        //initiallize gearbox
+        setSolenoids(lowGearSolenoids,!defaultToHighGear);
+        setSolenoids(highGearSolenoids,defaultToHighGear);
     }
 
     @Override
@@ -49,6 +54,15 @@ public class CBDifferentialDriveController extends CBDriveController implements 
                 for (CBDriveModule dm : driveModules) {
                     double power = calculate(dm, dcd.direction, dcd.rotation);
                     dm.update(power);
+                }
+
+                if(dcd.shiftToLowGear) {
+                    setSolenoids(highGearSolenoids, false);
+                    setSolenoids(lowGearSolenoids, true);
+                }
+                if(dcd.shiftToHighGear) {
+                    setSolenoids(lowGearSolenoids, false);
+                    setSolenoids(highGearSolenoids, true);
                 }
             } else {
                 String msg = "Error: Invalid DriveControlData for DifferentialDriveController";
@@ -79,6 +93,12 @@ public class CBDifferentialDriveController extends CBDriveController implements 
             //feedback.timespan = Duration.between(lastUpdateTime,current);
             //feedback.translation = new CB2DVector(0,(leftTranslation+rightTranslation)/driveModules.size());
             ////feedback.rotation = (rightTranslation-leftTranslation)/
+        }
+    }
+
+    protected void setSolenoids(ArrayList<CBSolenoid> solenoids, boolean value) {
+        for(CBSolenoid solenoid:solenoids) {
+            solenoid.set(value);
         }
     }
 
@@ -138,6 +158,25 @@ public class CBDifferentialDriveController extends CBDriveController implements 
     public CBDifferentialDriveController addRightDriveModule(CBDriveModule driveModule) {
         super.addDriveModule(driveModule);
         rightDriveModules.add(driveModule);
+        return this;
+    }
+
+    public CBDifferentialDriveController addHighGearSolenoid(CBDeviceID... solenoids) {
+        for(CBDeviceID solenoid:solenoids) {
+            highGearSolenoids.add(Cyborg.hardwareAdapter.getSolenoidValve(solenoid));
+        }
+        return this;
+    }
+
+    public CBDifferentialDriveController addLowGearSolenoid(CBDeviceID... solenoids) {
+        for(CBDeviceID solenoid:solenoids) {
+            lowGearSolenoids.add(Cyborg.hardwareAdapter.getSolenoidValve(solenoid));
+        }
+        return this;
+    }
+
+    public CBDifferentialDriveController setDefaultToHighGear(boolean defaultToHighGear) {
+        this.defaultToHighGear = defaultToHighGear;
         return this;
     }
 }
