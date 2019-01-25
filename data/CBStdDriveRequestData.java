@@ -1,6 +1,7 @@
 package org.montclairrobotics.cyborg.core.data;
 
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
+import org.montclairrobotics.cyborg.core.utils.CBEnums;
 
 public class CBStdDriveRequestData extends CBDriveRequestData {
 
@@ -59,5 +60,7 @@ public class CBStdDriveRequestData extends CBDriveRequestData {
 
     public boolean shiftToHighGear;
     public boolean shiftToLowGear;
+
+    public CBEnums.CBMotorControlMode motorControlMode;
 
 }

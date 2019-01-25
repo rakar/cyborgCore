@@ -5,30 +5,35 @@ package org.montclairrobotics.cyborg.core.utils;
  */
 public class CBEnums {
 
-    /**
-     * DriveMode:
-     * {@link #Power}
-     * {@link #Speed}
-     * {@link #Conflict}
-     */
-    public enum CBDriveMode {
-        /**
-         * Power: -1 <= raw power <= 1
-         */
-        Power,
-        /**
-         * Speed: units/second (direction) degrees/second (rotation)
-         */
-        Speed,
-        /**
-         * Position: position in standard units
-         */
-        Position,
-        /**
-         * Conflict: indicates an error due to mixed speed controller modes
-         */
-        Conflict
-    };
+//    /**
+//     * DriveMode:
+//     * {@link #Power}
+//     * {@link #Speed}
+//     * {@link #Conflict}
+//     */
+//    public enum CBDriveMode {
+//        /**
+//         * Power: -1 <= raw power <= 1
+//         */
+//        Power,
+//        /**
+//         * Speed: units/second (direction) degrees/second (rotation)
+//         */
+//        Speed,
+//        /**
+//         * Position: position in standard units
+//         */
+//        Position,
+//        /**
+//         * Conflict: indicates an error due to mixed speed controller modes
+//         */
+//        Conflict
+//    };
+    public enum CBMotorControlMode {   DUTYCYCLE, VOLTAGE, POSITION, VELOCITY,
+        PERCENTAGEOUTPUT, CURRENT, DISABLED, FOLLOWER,
+        MOTIONMAGIC, MOTIONPROFILE, MOTIONPROFILEARC,
+        CONFLICT }
+
 
     /**
      * SpeedControllerScheme:

@@ -53,7 +53,7 @@ public class CBDifferentialDriveController extends CBDriveController implements 
                 CBStdDriveControlData dcd = (CBStdDriveControlData) this.dcd;
                 for (CBDriveModule dm : driveModules) {
                     double power = calculate(dm, dcd.direction, dcd.rotation);
-                    dm.update(power);
+                    dm.update(power, dcd.motorControlMode);
                 }
 
                 if(dcd.shiftToLowGear) {
@@ -105,14 +105,16 @@ public class CBDifferentialDriveController extends CBDriveController implements 
     protected double calculate(CBDriveModule module, CB2DVector direction, double rotation) {
         double res = 0;
 
-        switch (driveMode) {
-            case Power: {
+        res = (direction.getY() + Math.signum(module.getPosition().getX()) * rotation) * module.getOrientationCos();
+        /*
+        switch (motorControlMode) {
+            case PERCENTAGEOUTPUT: {
                 //CB2DVector diff = new CB2DVector(0,direction.getY()+Math.signum(module.getPosition().getX())*rotation);
                 //res = module.getOrientationVector().dot(diff);
                 res = (direction.getY() + Math.signum(module.getPosition().getX()) * rotation) * module.getOrientationCos();
             }
             break;
-            case Speed: {
+            case VELOCITY: {
                 CB2DVector pos = module.getPosition();
                 CB2DVector targetPosition =
                         pos.rotate(rotation)
@@ -122,10 +124,11 @@ public class CBDifferentialDriveController extends CBDriveController implements 
                 //SmartDashboard.putNumber("speed:", res);
             }
             break;
-            case Conflict:
+            case CONFLICT:
             default:
                 break;
         }
+        */
 
         return res;
     }

@@ -1,6 +1,6 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
-import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
+import org.montclairrobotics.cyborg.core.utils.CBEnums;
 import org.montclairrobotics.cyborg.core.utils.CBEnums.CBEncoderScheme;
 import org.montclairrobotics.cyborg.core.utils.CBErrorCorrection;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
@@ -27,7 +27,7 @@ public abstract class CBSpeedControllerArray {
     protected CBErrorCorrection errorCorrection = null;
     protected CBEncoderScheme encoderScheme = CBEncoderScheme.None;
 
-    protected CBDriveMode driveMode = CBDriveMode.Power;
+    protected CBEnums.CBMotorControlMode motorControlMode = CBEnums.CBMotorControlMode.PERCENTAGEOUTPUT;
 
     protected boolean reversed = false;
     protected int direction = 1;
@@ -37,8 +37,8 @@ public abstract class CBSpeedControllerArray {
         return this;
     }
 
-    public CBSpeedControllerArray setDriveMode(CBDriveMode driveMode) {
-        this.driveMode = driveMode;
+    public CBSpeedControllerArray setMotorControlMode(CBEnums.CBMotorControlMode motorControlMode) {
+        this.motorControlMode = motorControlMode;
         return this;
     }
 
@@ -77,8 +77,8 @@ public abstract class CBSpeedControllerArray {
         return this;
     }
 
-    public CBDriveMode getDriveMode() {
-        return driveMode;
+    public CBEnums.CBMotorControlMode getMotorControlMode() {
+        return motorControlMode;
     }
 
     public abstract double get();

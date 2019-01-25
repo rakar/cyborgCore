@@ -1,7 +1,7 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
-import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
+import org.montclairrobotics.cyborg.core.utils.CBEnums;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class CBDriveModule {
     private double orientationRadians;
     private double orientationCos;
     private CB2DVector orientationVector;
-    private CBDriveMode driveMode = null;
+    private CBEnums.CBMotorControlMode motorControlMode = null;
     private CBSpeedControllerArray feedbackArray = null;
 
     public CBDriveModule() {
@@ -35,11 +35,11 @@ public class CBDriveModule {
     public CBDriveModule addSpeedControllerArray(CBSpeedControllerArray controllerArray) {
         //Cyborg.hardwareAdapter.robot.logMessage("drive module adding speed controller array");
 
-        if (driveMode == null) {
-            driveMode = controllerArray.getDriveMode();
+        if (motorControlMode == null) {
+            motorControlMode = controllerArray.getMotorControlMode();
         } else {
-            if (controllerArray.getDriveMode() != driveMode) {
-                driveMode = CBDriveMode.Conflict;
+            if (controllerArray.getMotorControlMode() != motorControlMode) {
+                motorControlMode = CBEnums.CBMotorControlMode.CONFLICT;
             }
         }
         controllerArrays.add(controllerArray);
@@ -62,6 +62,19 @@ public class CBDriveModule {
         for (CBSpeedControllerArray c : controllerArrays) {
             //Cyborg.hardwareAdapter.robot.logMessage("Calling speed controller array update");
             c.update(target);
+        }
+        return this;
+    }
+
+    public CBDriveModule update(double target, CBEnums.CBMotorControlMode motorControlMode) {
+        //Cyborg.hardwareAdapter.robot.logMessage("in drive module update");
+        for (CBSpeedControllerArray c : controllerArrays) {
+            //Cyborg.hardwareAdapter.robot.logMessage("Calling speed controller array update");
+            if(c instanceof CBSmartSpeedControllerArray) {
+                ((CBSmartSpeedControllerArray) c).update(target, motorControlMode);
+            } else {
+                c.update(target);
+            }
         }
         return this;
     }
@@ -102,10 +115,10 @@ public class CBDriveModule {
     }
 
     /**
-     * @return the driveMode
+     * @return the motorControlMode
      */
-    public CBDriveMode getDriveMode() {
-        return driveMode;
+    public CBEnums.CBMotorControlMode getMotorControlMode() {
+        return motorControlMode;
     }
 
     public boolean canProvideFeedback() {

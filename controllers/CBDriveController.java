@@ -2,17 +2,17 @@ package org.montclairrobotics.cyborg.core.controllers;
 
 //import java.time.Duration;
 
-import java.util.ArrayList;
-
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
-import org.montclairrobotics.cyborg.core.utils.CBEnums.CBDriveMode;
+import org.montclairrobotics.cyborg.core.utils.CBEnums;
+
+import java.util.ArrayList;
 
 public abstract class CBDriveController extends CBRobotController {
 
     protected ArrayList<CBDriveModule> driveModules = new ArrayList<>();
-    protected CBDriveMode driveMode;
+    protected CBEnums.CBMotorControlMode motorControlMode;
     protected double controlPeriod = 1 / 50.0;
 
     public class CBDriveFeedback {
@@ -38,18 +38,18 @@ public abstract class CBDriveController extends CBRobotController {
     }
 
     /**
-     * @return the driveMode
+     * @return the motorControlMode
      */
-    public CBDriveMode getDriveMode() {
-        return driveMode;
+    public CBEnums.CBMotorControlMode getMotorControlMode() {
+        return motorControlMode;
     }
 
     protected void updateDriveMode(CBDriveModule driveModule) {
-        if (driveMode == null) {
-            driveMode = driveModule.getDriveMode();
+        if (motorControlMode == null) {
+            motorControlMode = driveModule.getMotorControlMode();
         } else {
-            if (driveModule.getDriveMode() != driveMode) {
-                driveMode = CBDriveMode.Conflict;
+            if (driveModule.getMotorControlMode() != motorControlMode && motorControlMode != CBEnums.CBMotorControlMode.FOLLOWER) {
+                motorControlMode = CBEnums.CBMotorControlMode.CONFLICT;
                 throw new RuntimeException("Drivemode Conflict");
             }
         }
