@@ -53,6 +53,8 @@ public class CBStdDriveBehavior extends CBBehavior {
                 if (gyroLockState.getState()) dcd.rotation = gyroLockTracker.update(drd.gyroLockValue);
             }
 
+            dcd.motorControlMode = drd.motorControlMode;
+
             //
             // Turn off request.active to indicate that command was handled.
             // This will prevent re-processing a given request. For example
