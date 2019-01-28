@@ -106,7 +106,7 @@ public class CBMecanumDriveController extends CBDriveController {
                 for (CBCalcModule cm : calcModules) {
                     double speed = cm.fbm * cm.lrm * dcd.direction.getX() + dcd.direction.getY() - cm.lrm * dcd.rotation;
                     if (Math.abs(speed) > maxSpeed) {
-                        maxSpeed = speed;
+                        maxSpeed = Math.abs(speed);
                     }
                     cm.vTotal = speed;
                 }
