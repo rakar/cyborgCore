@@ -33,7 +33,7 @@ public class CBTarget1D extends CBEdgeTrigger {
 
     public CBTarget1D update(double x) {
         xPosition = x;
-        super.update(active && isOnTarget(xPosition));
+        super.update(active && isOnTarget());
         return this;
     }
 
@@ -65,7 +65,6 @@ public class CBTarget1D extends CBEdgeTrigger {
     public boolean isBelowTarget(double value) {
         return (active && value<(xTarget-xRange));
     }
-
 }
 
 

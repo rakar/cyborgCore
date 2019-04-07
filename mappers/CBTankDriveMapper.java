@@ -4,6 +4,7 @@ import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.data.CBDriveRequestData;
 import org.montclairrobotics.cyborg.core.data.CBStdDriveRequestData;
 import org.montclairrobotics.cyborg.core.data.CBTankDriveRequestData;
+import org.montclairrobotics.cyborg.core.utils.CBUtil;
 import org.montclairrobotics.cyborg.devices.CBAxis;
 import org.montclairrobotics.cyborg.devices.CBButton;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
@@ -15,12 +16,15 @@ public class CBTankDriveMapper extends CBTeleOpMapper {
     private CBButton gyroLock = null;
     private CBStdDriveRequestData sdrd;
     private CBTankDriveRequestData tdrd;
+    private double leftScale, rightScale;
 
 
     public CBTankDriveMapper(Cyborg robot, CBDriveRequestData requestData, CBDeviceID leftDeviceID, CBDeviceID rightDeviceID) {
         super(robot);
         this.left = Cyborg.hardwareAdapter.getAxis(leftDeviceID);
         this.right = Cyborg.hardwareAdapter.getAxis(rightDeviceID);
+        leftScale = -1;
+        rightScale = -1;
         setRequestData(requestData);
     }
 
@@ -58,12 +62,12 @@ public class CBTankDriveMapper extends CBTeleOpMapper {
         double leftStick = 0; // y-axis of first stick
         double rightStick = 0; // y-axis of second stick;
 
-        if (left != null && left.isDefined()) leftStick = -left.get();
+        if (left != null && left.isDefined()) leftStick = left.get();
         if (right != null && right.isDefined()) rightStick = right.get();
 
         // Implement dead zone
-        if (Math.abs(leftStick) < deadzone) leftStick = 0.0;
-        if (Math.abs(rightStick) < deadzone) rightStick = 0.0;
+        leftStick = CBUtil.ApplyDeadzone(leftStick, deadzone);
+        rightStick = CBUtil.ApplyDeadzone(rightStick, deadzone);
 
         if (sdrd != null) {
             double velocity = (leftStick + rightStick) / 2.0;// Average stick value "forward"
@@ -82,4 +86,11 @@ public class CBTankDriveMapper extends CBTeleOpMapper {
             tdrd.active = true;
         }
     }
+
+    public CBTankDriveMapper setAxisScales(double leftScale, double rightScale) {
+        this.leftScale = leftScale;
+        this.rightScale = rightScale;
+        return this;
+    }
+
 }

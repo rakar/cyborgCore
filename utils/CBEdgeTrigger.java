@@ -14,6 +14,10 @@ public class CBEdgeTrigger {
 	private boolean fallingEdgePulse = false;
 	private int countTrue;
 	private int countFalse;
+	private int debounceCount = 0;
+	private boolean debouncedState = false;
+	private boolean debouncedRisingEdge = false;
+	private boolean debouncedFallingEdge = false;
 
     /**
      * In cases where initial state may not be 0/false,
@@ -25,6 +29,7 @@ public class CBEdgeTrigger {
 	public CBEdgeTrigger setInitialState(boolean value) {
 		this.state = value;
 		this.toggle = value;
+		this.debouncedState = value;
 		countTrue = 0;
 		countFalse = 0;
 		return this;
@@ -40,7 +45,17 @@ public class CBEdgeTrigger {
 		return this;
 	}
 
-    /**
+	/**
+	 * Specify the number of debounce cycles.
+	 * @param debounceCount number of debounce cycles
+	 * @return current object
+	 */
+	public CBEdgeTrigger setDebounceCount(int debounceCount) {
+		this.debounceCount = debounceCount;
+		return this;
+	}
+
+	/**
      * Process a signal sample and update all values
      * @param value input signal
      * @return current object
@@ -83,7 +98,22 @@ public class CBEdgeTrigger {
 			countTrue=0;
 			countFalse++;
 		}
-		
+
+		debouncedRisingEdge=false;
+		debouncedFallingEdge=false;
+		if(countTrue>debounceCount) {
+			if(!debouncedState) {
+				debouncedRisingEdge = true;
+				debouncedState = true;
+			}
+		}
+		if(countFalse>debounceCount) {
+			if(debouncedState) {
+				debouncedFallingEdge = true;
+				debouncedState = false;
+			}
+		}
+
 		return this;
 	}
 
