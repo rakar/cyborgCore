@@ -1,6 +1,7 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
 import org.montclairrobotics.cyborg.core.utils.CBEnums;
+import org.montclairrobotics.cyborg.devices.CBDeviceID;
 import org.montclairrobotics.cyborg.devices.CBSmartSpeedController;
 import org.montclairrobotics.cyborg.devices.CBSpeedController;
 
@@ -15,6 +16,15 @@ public class CBSmartSpeedControllerArray extends CBSpeedControllerArray {
 
     public CBSmartSpeedControllerArray() {
     }
+
+
+    @Override
+    public CBSmartSpeedControllerArray addSpeedController(CBDeviceID controllerId) {
+        super.addSpeedController(controllerId);
+        return this;
+    }
+
+
 
     @Override
     public CBSpeedControllerArray update(double target) {

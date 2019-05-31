@@ -311,9 +311,9 @@ public class CBLiftController extends CBRobotController {
             //    SmartDashboard.putBoolean("encoderClean", encoder.wasIndexed());
             //}
 
-            topLimit = (topLimitSwitch != null && topLimitSwitch.get())
+            topLimit = (topLimitSwitch != null && topLimitSwitch.getState())
                     || (encoder != null && cd.topEncoderLimit.isActive() && encoder.wasIndexed() && cd.topEncoderLimit.isAboveTarget());
-            bottomLimit = (bottomLimitSwitch != null && bottomLimitSwitch.get())
+            bottomLimit = (bottomLimitSwitch != null && bottomLimitSwitch.getState())
                     || (encoder != null && cd.bottomEncoderLimit.isActive() && encoder.wasIndexed() && cd.bottomEncoderLimit.isBelowTarget());
             goUp = !topLimit && (cd.requestUp || (encoder != null && encoder.wasIndexed() && cd.target.isBelowTarget()));
             goDown = !bottomLimit && (cd.requestDown || (encoder != null && encoder.wasIndexed() && cd.target.isAboveTarget()));

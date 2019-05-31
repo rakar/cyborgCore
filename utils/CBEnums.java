@@ -29,7 +29,7 @@ public class CBEnums {
 //         */
 //        Conflict
 //    };
-    public enum CBMotorControlMode {   DUTYCYCLE, VOLTAGE, POSITION, VELOCITY,
+    public enum CBMotorControlMode {   NONE, DUTYCYCLE, VOLTAGE, POSITION, VELOCITY,
         PERCENTAGEOUTPUT, CURRENT, DISABLED, FOLLOWER,
         MOTIONMAGIC, MOTIONPROFILE, MOTIONPROFILEARC,
         CONFLICT }

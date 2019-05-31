@@ -1,6 +1,7 @@
 package org.montclairrobotics.cyborg.core.assemblies;
 
 import org.montclairrobotics.cyborg.core.utils.CBErrorCorrection.CBOnTargetMode;
+import org.montclairrobotics.cyborg.devices.CBDeviceID;
 import org.montclairrobotics.cyborg.devices.CBSpeedController;
 
 /**
@@ -18,6 +19,12 @@ public class CBSimpleSpeedControllerArray extends CBSpeedControllerArray {
     public CBSimpleSpeedControllerArray() {
     }
 
+    @Override
+    public CBSimpleSpeedControllerArray addSpeedController(CBDeviceID controllerId) {
+        super.addSpeedController(controllerId);
+        return this;
+    }
+
     /* (non-Javadoc)
      * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArray#update(double)
      */
@@ -27,6 +34,7 @@ public class CBSimpleSpeedControllerArray extends CBSpeedControllerArray {
         //Cyborg.hardwareAdapter.robot.logMessage("in speed controller array update " + motorControlMode.name());
 
         switch (motorControlMode) {
+            case NONE:
             case PERCENTAGEOUTPUT:
                 outputValue = target;
                 break;

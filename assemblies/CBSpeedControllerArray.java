@@ -27,7 +27,7 @@ public abstract class CBSpeedControllerArray {
     protected CBErrorCorrection errorCorrection = null;
     protected CBEncoderScheme encoderScheme = CBEncoderScheme.None;
 
-    protected CBEnums.CBMotorControlMode motorControlMode = CBEnums.CBMotorControlMode.PERCENTAGEOUTPUT;
+    protected CBEnums.CBMotorControlMode motorControlMode = CBEnums.CBMotorControlMode.NONE;
 
     protected boolean reversed = false;
     protected int direction = 1;
@@ -52,6 +52,16 @@ public abstract class CBSpeedControllerArray {
      * @see org.montclairrobotics.cyborg.devices.CBSpeedControllerArray#addSpeedController(org.montclairrobotics.cyborg.devices.CBSpeedController)
      */
     public CBSpeedControllerArray addSpeedController(CBDeviceID controllerId) {
+        CBSpeedController sc = hardwareAdapter.getSpeedController(controllerId);
+        if (motorControlMode == CBEnums.CBMotorControlMode.NONE) {
+            motorControlMode = sc.getControlMode();
+        }
+        else {
+            if (motorControlMode!=sc.getControlMode()) {
+                motorControlMode = CBEnums.CBMotorControlMode.CONFLICT;
+            }
+        }
+
         speedControllers.add(hardwareAdapter.getSpeedController(controllerId));
         return this;
     }
