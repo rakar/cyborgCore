@@ -14,9 +14,6 @@ import org.montclairrobotics.cyborg.devices.CBSpeedController;
  */
 public class CBSmartSpeedControllerArray extends CBSpeedControllerArray {
 
-    public CBSmartSpeedControllerArray() {
-    }
-
 
     @Override
     public CBSmartSpeedControllerArray addSpeedController(CBDeviceID controllerId) {
@@ -24,14 +21,21 @@ public class CBSmartSpeedControllerArray extends CBSpeedControllerArray {
         return this;
     }
 
-
+    @Override
+    public CBSmartSpeedControllerArray setMotorControlMode(CBEnums.CBMotorControlMode motorControlMode) {
+        super.setMotorControlMode(motorControlMode);
+        for (CBSpeedController sc : speedControllers) {
+            ((CBSmartSpeedController) sc).setControlMode(motorControlMode);
+        }
+        return this;
+    }
 
     @Override
-    public CBSpeedControllerArray update(double target) {
+    public CBSmartSpeedControllerArray update(double target) {
         return update(target, motorControlMode);
     }
 
-    public CBSpeedControllerArray update(double target, CBEnums.CBMotorControlMode motorControlMode) {
+    public CBSmartSpeedControllerArray update(double target, CBEnums.CBMotorControlMode motorControlMode) {
         this.motorControlMode = motorControlMode;
         for (CBSpeedController sc : speedControllers) {
             double v = target * direction;
